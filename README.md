@@ -50,6 +50,8 @@ Timeline for the above task: 2 days
 -   [Date Picker](https://mui.com/x/react-date-pickers/date-time-picker/)
 -   [Env Variables in Vite](https://vitejs.dev/guide/env-and-mode.html#env-files)
 -   [Override formik onchange](https://stackoverflow.com/questions/66744999/override-formik-onchange-with-custom-onchange-method-in-reactjs)
+-   [Update doc in Firestore](https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
+-   [Delete doc in Firestore](https://firebase.google.com/docs/firestore/manage-data/delete-data)
 
 ## Author
 
