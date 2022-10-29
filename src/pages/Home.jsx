@@ -101,9 +101,11 @@ const Home = () => {
                     Add Todo
                 </Button>
             </form>
-            {todos.map((todo) => (
-                <Todo key={todo.id} {...todo} />
-            ))}
+            {todos
+                .sort((a, b) => a.isCompleted - b.isCompleted)
+                .map((todo) => (
+                    <Todo key={todo.id} {...todo} />
+                ))}
         </div>
     )
 }
