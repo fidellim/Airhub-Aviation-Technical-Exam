@@ -13,6 +13,21 @@ const Home = () => {
     const [todos, setTodos] = useState([])
     const [isChecked, setIsChecked] = useState(false)
 
+    useEffect(() => {
+        const unsubscribe = onSnapshot(queryTodos, (querySnapshot) => {
+            setTodos(
+                querySnapshot.docs.map((doc) => {
+                    // console.log(
+                    //     'Data: ',
+                    //     doc.data().dueDate && doc.data().dueDate.toDate()
+                    // )
+                    return { ...doc.data(), id: doc.id }
+                })
+            )
+        })
+
+        return () => unsubscribe()
+    }, [])
 
     const formik = useFormik({
         initialValues: {
