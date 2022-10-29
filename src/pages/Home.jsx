@@ -17,10 +17,7 @@ const Home = () => {
         const unsubscribe = onSnapshot(queryTodos, (querySnapshot) => {
             setTodos(
                 querySnapshot.docs.map((doc) => {
-                    // console.log(
-                    //     'Data: ',
-                    //     doc.data().dueDate && doc.data().dueDate.toDate()
-                    // )
+                    // add doc.id to have reference for each todo
                     return { ...doc.data(), id: doc.id }
                 })
             )
