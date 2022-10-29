@@ -5,6 +5,7 @@ import CircleIcon from '@mui/icons-material/Circle'
 import EditIcon from '@mui/icons-material/Edit'
 import { useState } from 'react'
 import { updateTodo } from '../database'
+import EditModal from './Modal'
 
 const Todo = ({ id, task, dueDate, isCompleted }) => {
     const formatDueDate =
@@ -15,6 +16,9 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
             .substring(4, dueDate.toDate().toString().indexOf('+'))
 
     const [updateIsCompleted, setUpdateIsCompleted] = useState(isCompleted)
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
 
     const handleCheckBox = () => {
         setUpdateIsCompleted((prev) => {
@@ -58,9 +62,16 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
                 )}
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                <EditIcon />
-                <DeleteIcon />
+                <EditIcon onClick={handleOpen} sx={{ cursor: 'pointer' }} />
+                <DeleteIcon sx={{ cursor: 'pointer' }} />
             </Box>
+            <EditModal
+                open={open}
+                handleClose={handleClose}
+                id={id}
+                task={task}
+                dueDate={dueDate}
+            />
         </Box>
     )
 }
