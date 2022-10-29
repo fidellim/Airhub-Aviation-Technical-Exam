@@ -110,7 +110,7 @@ export default function EditModal({ open, handleClose, id, task, dueDate }) {
                             color="primary"
                             type="submit"
                         >
-                            Add Todo
+                            Update Todo
                         </Button>
                     </form>
                 </Box>
