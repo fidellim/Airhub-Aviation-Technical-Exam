@@ -68,13 +68,13 @@ const Home = () => {
                     error={formik.touched.task && Boolean(formik.errors.task)}
                     helperText={formik.touched.task && formik.errors.task}
                 />
-                <Box sx={{ display: 'flex' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Checkbox
                         checked={isChecked}
                         onChange={handleCheck}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
-                    <Typography variant="h2" component="h2">
+                    <Typography variant="p" component="p">
                         {`${isChecked ? 'Remove' : 'Add'} reminder`}
                     </Typography>
                 </Box>
