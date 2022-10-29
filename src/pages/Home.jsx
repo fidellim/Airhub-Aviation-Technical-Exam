@@ -8,6 +8,7 @@ import { useFormik } from 'formik'
 import { todoValidationSchema } from '../library/form'
 import { addTodo, queryTodos } from '../database'
 import { onSnapshot } from 'firebase/firestore'
+import Todo from '../components/Todo'
 
 const Home = () => {
     const [todos, setTodos] = useState([])
@@ -103,14 +104,7 @@ const Home = () => {
                 </Button>
             </form>
             {todos.map((todo) => (
-                <Box key={todo.id}>
-                    <div>
-                        <h1>{todo.task}</h1>
-                        {todo.dueDate && (
-                            <p>{todo.dueDate.toDate().toString()}</p>
-                        )}
-                    </div>
-                </Box>
+                <Todo key={todo.id} {...todo} />
             ))}
         </div>
     )
