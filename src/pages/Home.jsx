@@ -46,8 +46,6 @@ const Home = () => {
         },
     })
 
-    const label = { inputProps: { 'aria-label': 'controlled' } }
-
     const handleCheck = (event) => {
         setIsChecked(event.target.checked)
     }
@@ -72,9 +70,9 @@ const Home = () => {
                 />
                 <Box sx={{ display: 'flex' }}>
                     <Checkbox
-                        {...label}
                         checked={isChecked}
                         onChange={handleCheck}
+                        inputProps={{ 'aria-label': 'controlled' }}
                     />
                     <Typography variant="h2" component="h2">
                         {`${isChecked ? 'Remove' : 'Add'} reminder`}
