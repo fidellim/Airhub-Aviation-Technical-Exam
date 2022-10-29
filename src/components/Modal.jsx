@@ -1,8 +1,13 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
+import { TextField, Button, Typography, Checkbox, Box } from '@mui/material'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker'
+import dayjs from 'dayjs'
+import { useState, useEffect } from 'react'
+import { useFormik } from 'formik'
+import { todoValidationSchema } from '../library/form'
+import { updateTodo } from '../database'
 
 const style = {
     position: 'absolute',
@@ -16,14 +21,31 @@ const style = {
     p: 4,
 }
 
-export default function Modal() {
-    const [open, setOpen] = React.useState(false)
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+export default function EditModal({ open, handleClose, id, task, dueDate }) {
+    const [isChecked, setIsChecked] = useState(dueDate ? true : false)
+
+    const formik = useFormik({
+        initialValues: {
+            task: task,
+            dueDate: (dueDate && dueDate.toDate()) || new Date(),
+        },
+        validationSchema: todoValidationSchema,
+        onSubmit: async (values, { resetForm }) => {
+            const { task } = values
+            let { dueDate } = values
+            if (!isChecked) {
+                dueDate = null
+            }
+            updateTodo(id, { task, dueDate })
+        },
+    })
+
+    const handleCheck = (event) => {
+        setIsChecked(event.target.checked)
+    }
 
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -31,17 +53,66 @@ export default function Modal() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                    >
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor
-                        ligula.
-                    </Typography>
+                    <form onSubmit={formik.handleSubmit}>
+                        <TextField
+                            id="task"
+                            name="task"
+                            label="Task"
+                            variant="outlined"
+                            style={{ margin: '0px 5px' }}
+                            size="small"
+                            value={formik.values.task}
+                            onChange={formik.handleChange}
+                            error={
+                                formik.touched.task &&
+                                Boolean(formik.errors.task)
+                            }
+                            helperText={
+                                formik.touched.task && formik.errors.task
+                            }
+                        />
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Checkbox
+                                checked={isChecked}
+                                onChange={handleCheck}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                            <Typography variant="p" component="p">
+                                {`${isChecked ? 'Remove' : 'Add'} reminder`}
+                            </Typography>
+                        </Box>
+                        {isChecked && (
+                            <Box>
+                                <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                >
+                                    <MobileDateTimePicker
+                                        id="reminder"
+                                        name="reminder"
+                                        label="Reminder"
+                                        value={formik.values.dueDate}
+                                        onChange={(newValue) => {
+                                            formik.setFieldValue(
+                                                'dueDate',
+                                                newValue.$d
+                                            )
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} />
+                                        )}
+                                        minDate={dayjs(new Date().toString())}
+                                    />
+                                </LocalizationProvider>
+                            </Box>
+                        )}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            Add Todo
+                        </Button>
+                    </form>
                 </Box>
             </Modal>
         </div>
