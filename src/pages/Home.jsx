@@ -1,26 +1,37 @@
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, Typography, Checkbox, Box } from '@mui/material'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker'
-import Checkbox from '@mui/material/Checkbox'
-import Box from '@mui/material/Box'
 import dayjs from 'dayjs'
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useFormik } from 'formik'
+import { todoValidationSchema } from '../library/form'
+import { addTodo, queryTodos } from '../database'
+import { onSnapshot } from 'firebase/firestore'
 
 const Home = () => {
     const [todos, setTodos] = useState([])
-    const [input, setInput] = useState('')
-    const [value, setValue] = useState(new Date())
     const [isChecked, setIsChecked] = useState(false)
-    const addTodo = (e) => {
-        e.preventDefault()
-        setTodos([
-            ...todos,
-            { todo: input, dueDate: value ? value.toString() : null },
-        ])
-        setInput('')
-        setValue(new Date())
-    }
+
+
+    const formik = useFormik({
+        initialValues: {
+            task: '',
+            isCompleted: false,
+            dueDate: new Date(),
+        },
+        validationSchema: todoValidationSchema,
+        onSubmit: async (values, { resetForm }) => {
+            const { task, isCompleted } = values
+            let { dueDate } = values
+            if (!isChecked) {
+                dueDate = null
+            }
+            const docRef = await addTodo({ task, dueDate, isCompleted })
+            console.log('Doc Success: ', docRef)
+            resetForm({ values: '' })
+        },
+    })
 
     const label = { inputProps: { 'aria-label': 'controlled' } }
 
@@ -30,16 +41,21 @@ const Home = () => {
 
     return (
         <div className="App">
-            <h1>TODO</h1>
-            <form>
+            <Typography variant="h1" component="h1">
+                TODO
+            </Typography>
+            <form onSubmit={formik.handleSubmit}>
                 <TextField
-                    id="outlined-basic"
-                    label="Make Todo"
+                    id="task"
+                    name="task"
+                    label="Task"
                     variant="outlined"
                     style={{ margin: '0px 5px' }}
                     size="small"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    value={formik.values.task}
+                    onChange={formik.handleChange}
+                    error={formik.touched.task && Boolean(formik.errors.task)}
+                    helperText={formik.touched.task && formik.errors.task}
                 />
                 <Box sx={{ display: 'flex' }}>
                     <Checkbox
@@ -47,17 +63,20 @@ const Home = () => {
                         checked={isChecked}
                         onChange={handleCheck}
                     />
-                    <h2>{`${isChecked ? 'Remove' : 'Add'} reminder`}</h2>
+                    <Typography variant="h2" component="h2">
+                        {`${isChecked ? 'Remove' : 'Add'} reminder`}
+                    </Typography>
                 </Box>
                 {isChecked && (
                     <Box>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <MobileDateTimePicker
+                                id="reminder"
+                                name="reminder"
                                 label="Reminder"
-                                value={value}
+                                value={formik.values.dueDate}
                                 onChange={(newValue) => {
-                                    console.log(newValue.$d)
-                                    setValue(newValue)
+                                    formik.setFieldValue('dueDate', newValue.$d)
                                 }}
                                 renderInput={(params) => (
                                     <TextField {...params} />
@@ -67,20 +86,20 @@ const Home = () => {
                         </LocalizationProvider>
                     </Box>
                 )}
-                <Button variant="contained" color="primary" onClick={addTodo}>
+                <Button variant="contained" color="primary" type="submit">
                     Add Todo
                 </Button>
             </form>
-            <ul>
-                {todos.map((todo) => (
-                    <li key={todo.todo}>
-                        <div>
-                            <h1>{todo.todo}</h1>
-                            <p>{todo.dueDate.split('+')[0]}</p>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+            {todos.map((todo) => (
+                <Box key={todo.id}>
+                    <div>
+                        <h1>{todo.task}</h1>
+                        {todo.dueDate && (
+                            <p>{todo.dueDate.toDate().toString()}</p>
+                        )}
+                    </div>
+                </Box>
+            ))}
         </div>
     )
 }
