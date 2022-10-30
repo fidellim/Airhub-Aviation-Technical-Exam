@@ -36,7 +36,7 @@ export default function EditModal({ open, handleClose, id, task, dueDate }) {
             if (!isChecked) {
                 dueDate = null
             }
-            updateTodo(id, { task, dueDate })
+            await updateTodo(id, { task, dueDate })
         },
     })
 
