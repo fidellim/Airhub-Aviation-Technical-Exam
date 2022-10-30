@@ -17,10 +17,10 @@
 
 Create a To-do list
 
--   [] Sign up form
+-   [✅] Sign up form
 -   [✅] User Login ( Forgot / Reset password)
 -   [✅] User should be able to create, edit and delete task
--   [] Task reminder based on Due date
+-   [✅] Task reminder based on Due date
 -   [✅] Use REACT for the UI and design library like MUI
 -   [✅] Backend use services like firebase database or AWS app sync for library and authentication.
 
