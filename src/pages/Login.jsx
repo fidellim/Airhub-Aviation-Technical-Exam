@@ -61,12 +61,10 @@ const Login = () => {
                     setIsSuccess(true)
                     setOpen(true)
                     resetForm({ values: '' })
-                    // ...
                 })
                 .catch((error) => {
                     const errorCode = error.code
                     const errorMessage = error.message
-                    // console.log(errorCode, errorMessage);
                     setOpen(true)
                 })
         },

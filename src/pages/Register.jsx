@@ -66,7 +66,6 @@ const Register = () => {
                 .catch((error) => {
                     const errorCode = error.code
                     const errorMessage = error.message
-                    // console.log(errorCode, errorMessage);
                     setIsSuccess(false)
                     setOpen(true)
                     setErrorMessage(`Register was unsuccessful.`)
