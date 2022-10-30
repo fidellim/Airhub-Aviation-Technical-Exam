@@ -84,96 +84,133 @@ const Login = () => {
     })
 
     return (
-        <>
-            <Typography
-                variant="h2"
+        <Box sx={{ padding: '1rem' }}>
+            <Box
                 sx={{
-                    fontSize: {
-                        xs: '1.5rem',
-                        sm: '2.5rem',
+                    background: 'white',
+                    borderRadius: '7px',
+                    padding: '1rem',
+
+                    width: {
+                        xs: '100%',
+                        sm: '450px',
                     },
-                    textAlign: 'center',
-                    marginBottom: '5px',
                 }}
             >
-                Login
-            </Typography>
-            <form onSubmit={formik.handleSubmit}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '10px',
-                    }}
-                >
-                    <TextField
-                        fullWidth
-                        id="email"
-                        name="email"
-                        label="Email"
-                        type="text"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        error={
-                            formik.touched.email && Boolean(formik.errors.email)
-                        }
-                        helperText={formik.touched.email && formik.errors.email}
-                    />
-                    <TextField
-                        fullWidth
-                        id="password"
-                        name="password"
-                        label="Password"
-                        type="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        error={
-                            formik.touched.password &&
-                            Boolean(formik.errors.password)
-                        }
-                        helperText={
-                            formik.touched.password && formik.errors.password
-                        }
-                    />
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        fullWidth
-                        type="submit"
-                    >
-                        Login
-                    </Button>
-                </Box>
-            </form>
-            <Link to="/register">
                 <Typography
                     variant="h2"
                     sx={{
                         fontSize: {
                             xs: '1.5rem',
-                            sm: '2.5rem',
+                            sm: '2rem',
                         },
                         textAlign: 'center',
                         marginBottom: '5px',
+                        color: '#000058',
                     }}
                 >
-                    Register
+                    Login
                 </Typography>
-            </Link>
-            <Typography
-                variant="h2"
-                sx={{
-                    fontSize: {
-                        xs: '1.5rem',
-                        sm: '2.5rem',
-                    },
-                    textAlign: 'center',
-                    marginBottom: '5px',
-                }}
-                onClick={handleOpenModal}
-            >
-                Forgot password?
-            </Typography>
+                <form onSubmit={formik.handleSubmit}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '10px',
+                        }}
+                    >
+                        <TextField
+                            fullWidth
+                            id="email"
+                            name="email"
+                            label="Email"
+                            type="text"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            error={
+                                formik.touched.email &&
+                                Boolean(formik.errors.email)
+                            }
+                            helperText={
+                                formik.touched.email && formik.errors.email
+                            }
+                        />
+                        <TextField
+                            fullWidth
+                            id="password"
+                            name="password"
+                            label="Password"
+                            type="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            error={
+                                formik.touched.password &&
+                                Boolean(formik.errors.password)
+                            }
+                            helperText={
+                                formik.touched.password &&
+                                formik.errors.password
+                            }
+                        />
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            fullWidth
+                            type="submit"
+                        >
+                            Login
+                        </Button>
+                    </Box>
+                </form>
+                <Box
+                    sx={{
+                        border: '2px solid lightBlue',
+                        margin: '1rem 0',
+                        borderRadius: '7px',
+                        textTransform: 'uppercase',
+                    }}
+                >
+                    <Link to="/register">
+                        <Typography
+                            variant="h4"
+                            component="h4"
+                            sx={{
+                                fontSize: '14px',
+                                textAlign: 'center',
+                                padding: '6px 16px',
+                            }}
+                        >
+                            Register
+                        </Typography>
+                    </Link>
+                </Box>
+                <Box
+                    sx={{
+                        border: '2px solid lightBlue',
+                        margin: '1rem 0',
+                        borderRadius: '7px',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                    }}
+                >
+                    <Typography
+                        variant="h4"
+                        component="h4"
+                        sx={{
+                            fontSize: '14px',
+                            textAlign: 'center',
+                            padding: '6px 16px',
+                            color: '#1672fc',
+                            '&:hover': {
+                                textDecoration: 'underline',
+                            },
+                        }}
+                        onClick={handleOpenModal}
+                    >
+                        Forgot password?
+                    </Typography>
+                </Box>
+            </Box>
             <ResetPasswordModal
                 open={openModal}
                 handleClose={handleCloseModal}
@@ -191,7 +228,7 @@ const Login = () => {
                     }`}
                 </Alert>
             </Snackbar>
-        </>
+        </Box>
     )
 }
 
