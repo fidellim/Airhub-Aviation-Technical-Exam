@@ -26,19 +26,22 @@ const Home = () => {
     const [isChecked, setIsChecked] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [user, setUser] = useState()
+    const [FIREBASE_PATH, setFirebasePath] = useState()
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(queryTodos, (querySnapshot) => {
-            setTodos(
-                querySnapshot.docs.map((doc) => {
-                    // add doc.id to have reference for each todo
-                    return { ...doc.data(), id: doc.id }
-                })
-            )
-        })
+        const unsubscribe =
+            FIREBASE_PATH &&
+            onSnapshot(queryTodos(FIREBASE_PATH), (querySnapshot) => {
+                setTodos(
+                    querySnapshot.docs.map((doc) => {
+                        // add doc.id to have reference for each todo
+                        return { ...doc.data(), id: doc.id }
+                    })
+                )
+            })
 
-        return () => unsubscribe()
-    }, [])
+        return () => FIREBASE_PATH && unsubscribe()
+    }, [FIREBASE_PATH])
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -47,6 +50,8 @@ const Home = () => {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid
                 // console.log(user.email)
+                console.log('UID: ', uid)
+                setFirebasePath(`users/${uid}/todos`)
                 setUser(user)
                 setIsSuccess(true)
                 setOpen(true)
@@ -74,7 +79,10 @@ const Home = () => {
             if (!isChecked) {
                 dueDate = null
             }
-            const docRef = await addTodo({ task, dueDate, isCompleted })
+            const docRef = await addTodo(
+                { task, dueDate, isCompleted },
+                FIREBASE_PATH
+            )
             console.log('Doc Success: ', docRef)
             resetForm({ values: '' })
         },
@@ -104,13 +112,21 @@ const Home = () => {
 
     return (
         <div className="App">
-            <Box>
-                <Button variant="outlined" onClick={handleSignOut}>
-                    Logout
-                </Button>
-                <Typography variant="h1" component="h1">
-                    {user && user.email}
-                </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '1.5rem 1rem 1rem 1rem',
+                }}
+            >
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
+                    <Button variant="outlined" onClick={handleSignOut}>
+                        Logout
+                    </Button>
+                    <Typography variant="h6" component="h6">
+                        {user && user.email}
+                    </Typography>
+                </Box>
             </Box>
 
             <Typography variant="h1" component="h1">
@@ -173,7 +189,11 @@ const Home = () => {
                 {todos
                     .sort((a, b) => a.isCompleted - b.isCompleted)
                     .map((todo) => (
-                        <Todo key={todo.id} {...todo} />
+                        <Todo
+                            key={todo.id}
+                            {...todo}
+                            FIREBASE_PATH={FIREBASE_PATH}
+                        />
                     ))}
             </Box>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
