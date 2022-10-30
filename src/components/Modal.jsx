@@ -38,6 +38,7 @@ const style = {
 
 export default function EditModal({
     open,
+    setOpen,
     handleClose,
     id,
     task,
@@ -59,6 +60,7 @@ export default function EditModal({
                 dueDate = null
             }
             await updateTodo(id, { task, dueDate }, FIREBASE_PATH)
+            setOpen(false)
         },
     })
 

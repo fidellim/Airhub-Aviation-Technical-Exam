@@ -110,6 +110,7 @@ const Todo = ({ id, task, dueDate, isCompleted, FIREBASE_PATH }) => {
             </Box>
             <EditModal
                 open={open}
+                setOpen={setOpen}
                 handleClose={handleClose}
                 id={id}
                 task={task}
