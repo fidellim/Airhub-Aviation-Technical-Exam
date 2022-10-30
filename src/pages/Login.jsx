@@ -17,7 +17,9 @@ import {
     IconButton,
 } from '@mui/material'
 import { useState, forwardRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import { ResetPasswordModal } from '../components/Modal'
+
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
@@ -25,6 +27,9 @@ const Alert = forwardRef(function Alert(props, ref) {
 const Login = () => {
     let navigate = useNavigate()
     const [open, setOpen] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    const handleOpenModal = () => setOpenModal(true)
+    const handleCloseModal = () => setOpenModal(false)
     const [isSuccess, setIsSuccess] = useState(false)
 
     useEffect(() => {
@@ -140,6 +145,21 @@ const Login = () => {
                     </Button>
                 </Box>
             </form>
+            <Link to="/register">
+                <Typography
+                    variant="h2"
+                    sx={{
+                        fontSize: {
+                            xs: '1.5rem',
+                            sm: '2.5rem',
+                        },
+                        textAlign: 'center',
+                        marginBottom: '5px',
+                    }}
+                >
+                    Register
+                </Typography>
+            </Link>
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
