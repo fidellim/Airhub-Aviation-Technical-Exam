@@ -17,6 +17,7 @@ const style = {
     width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
+    borderRadius: '7px',
     boxShadow: 24,
     p: 4,
 }
@@ -53,7 +54,14 @@ export default function EditModal({ open, handleClose, id, task, dueDate }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <form onSubmit={formik.handleSubmit}>
+                    <form
+                        onSubmit={formik.handleSubmit}
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem',
+                        }}
+                    >
                         <TextField
                             id="task"
                             name="task"
