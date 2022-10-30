@@ -5,3 +5,11 @@ export const todoValidationSchema = yup.object({
     isCompleted: yup.boolean(),
     dueDate: yup.date(),
 })
+
+export const loginValidationSchema = yup.object({
+    email: yup
+        .string()
+        .email('Please enter a valid email.')
+        .required('Please enter your email.'),
+    password: yup.string().required('Please enter your password.'),
+})
