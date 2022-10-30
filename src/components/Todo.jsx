@@ -32,45 +32,72 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
     }
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-            <Checkbox
-                checked={updateIsCompleted}
-                onChange={handleCheckBox}
-                icon={<CircleOutlinedIcon />}
-                checkedIcon={<CircleIcon />}
-                inputProps={{ 'aria-label': 'controlled' }}
-            />
-            <Box>
-                <Typography
-                    variant="p"
-                    component="p"
+        <>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    gap: '.75rem',
+                    border: '1px solid blue',
+                    padding: '.5rem .5rem',
+                    borderRadius: '7px',
+                    minWidth: '500px',
+                    width: '100%',
+                }}
+            >
+                <Checkbox
+                    checked={updateIsCompleted}
+                    onChange={handleCheckBox}
+                    icon={<CircleOutlinedIcon />}
+                    checkedIcon={<CircleIcon />}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                />
+                <Box
                     sx={{
-                        textDecoration: isCompleted ? 'line-through' : 'none',
-                        fontSize: '1.5rem',
-                        fontWeight: 'bold',
+                        flex: '1',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        // minWidth: '500px',
+                        width: '100%',
                     }}
                 >
-                    {task}
-                </Typography>
-                {dueDate && (
                     <Typography
                         variant="p"
                         component="p"
                         sx={{
-                            fontSize: '.85rem',
+                            textDecoration: isCompleted
+                                ? 'line-through'
+                                : 'none',
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold',
+                            wordWrap: 'break-word',
+                            display: 'inline-block',
                         }}
                     >
-                        {formatDueDate}
-                        {/* {dueDate.toDate().toString()} */}
+                        {task}
                     </Typography>
-                )}
-            </Box>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                <EditIcon onClick={handleOpen} sx={{ cursor: 'pointer' }} />
-                <DeleteIcon
-                    onClick={handleDeleteTodo}
-                    sx={{ cursor: 'pointer' }}
-                />
+                    {dueDate && (
+                        <Typography
+                            variant="p"
+                            component="p"
+                            sx={{
+                                fontSize: '.85rem',
+                                wordWrap: 'break-word',
+                            }}
+                        >
+                            {formatDueDate}
+                            {/* {dueDate.toDate().toString()} */}
+                        </Typography>
+                    )}
+                </Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                    <EditIcon onClick={handleOpen} sx={{ cursor: 'pointer' }} />
+                    <DeleteIcon
+                        onClick={handleDeleteTodo}
+                        sx={{ cursor: 'pointer' }}
+                    />
+                </Box>
             </Box>
             <EditModal
                 open={open}
@@ -79,7 +106,7 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
                 task={task}
                 dueDate={dueDate}
             />
-        </Box>
+        </>
     )
 }
 
