@@ -4,7 +4,7 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import CircleIcon from '@mui/icons-material/Circle'
 import EditIcon from '@mui/icons-material/Edit'
 import { useState } from 'react'
-import { updateTodo } from '../database'
+import { updateTodo, deleteTodo } from '../database'
 import EditModal from './Modal'
 
 const Todo = ({ id, task, dueDate, isCompleted }) => {
@@ -25,6 +25,10 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
             updateTodo(id, { isCompleted: !prev })
             return !prev
         })
+    }
+
+    const handleDeleteTodo = async () => {
+        await deleteTodo(id)
     }
 
     return (
@@ -63,7 +67,10 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                 <EditIcon onClick={handleOpen} sx={{ cursor: 'pointer' }} />
-                <DeleteIcon sx={{ cursor: 'pointer' }} />
+                <DeleteIcon
+                    onClick={handleDeleteTodo}
+                    sx={{ cursor: 'pointer' }}
+                />
             </Box>
             <EditModal
                 open={open}
