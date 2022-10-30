@@ -22,7 +22,14 @@ const style = {
     p: 4,
 }
 
-export default function EditModal({ open, handleClose, id, task, dueDate }) {
+export default function EditModal({
+    open,
+    handleClose,
+    id,
+    task,
+    dueDate,
+    FIREBASE_PATH,
+}) {
     const [isChecked, setIsChecked] = useState(dueDate ? true : false)
 
     const formik = useFormik({
@@ -37,7 +44,7 @@ export default function EditModal({ open, handleClose, id, task, dueDate }) {
             if (!isChecked) {
                 dueDate = null
             }
-            await updateTodo(id, { task, dueDate })
+            await updateTodo(id, { task, dueDate }, FIREBASE_PATH)
         },
     })
 

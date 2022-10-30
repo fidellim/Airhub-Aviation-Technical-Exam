@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { updateTodo, deleteTodo } from '../database'
 import EditModal from './Modal'
 
-const Todo = ({ id, task, dueDate, isCompleted }) => {
+const Todo = ({ id, task, dueDate, isCompleted, FIREBASE_PATH }) => {
     const formatDueDate =
         dueDate &&
         dueDate
@@ -22,13 +22,13 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
 
     const handleCheckBox = () => {
         setUpdateIsCompleted((prev) => {
-            updateTodo(id, { isCompleted: !prev })
+            updateTodo(id, { isCompleted: !prev }, FIREBASE_PATH)
             return !prev
         })
     }
 
     const handleDeleteTodo = async () => {
-        await deleteTodo(id)
+        await deleteTodo(id, FIREBASE_PATH)
     }
 
     return (
@@ -105,6 +105,7 @@ const Todo = ({ id, task, dueDate, isCompleted }) => {
                 id={id}
                 task={task}
                 dueDate={dueDate}
+                FIREBASE_PATH={FIREBASE_PATH}
             />
         </>
     )
