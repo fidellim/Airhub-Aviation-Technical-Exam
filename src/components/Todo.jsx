@@ -1,6 +1,7 @@
 import { Box, Typography, Checkbox } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import CircleIcon from '@mui/icons-material/Circle'
 import EditIcon from '@mui/icons-material/Edit'
 import { useState } from 'react'
@@ -78,17 +79,26 @@ const Todo = ({ id, task, dueDate, isCompleted, FIREBASE_PATH }) => {
                         {task}
                     </Typography>
                     {dueDate && (
-                        <Typography
-                            variant="p"
-                            component="p"
+                        <Box
                             sx={{
-                                fontSize: '.85rem',
-                                wordWrap: 'break-word',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '.5rem',
                             }}
                         >
-                            {formatDueDate}
-                            {/* {dueDate.toDate().toString()} */}
-                        </Typography>
+                            <CalendarMonthIcon sx={{ fontSize: '1rem' }} />
+                            <Typography
+                                variant="p"
+                                component="p"
+                                sx={{
+                                    fontSize: '.85rem',
+                                    wordWrap: 'break-word',
+                                }}
+                            >
+                                {formatDueDate}
+                                {/* {dueDate.toDate().toString()} */}
+                            </Typography>
+                        </Box>
                     )}
                 </Box>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
