@@ -25,7 +25,10 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: {
+        xs: '100%',
+        sm: '400px',
+    },
     bgcolor: 'background.paper',
     border: '2px solid #000',
     borderRadius: '7px',
@@ -184,7 +187,7 @@ export function ResetPasswordModal({ open, handleClose }) {
     })
 
     return (
-        <div>
+        <Box>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -240,10 +243,10 @@ export function ResetPasswordModal({ open, handleClose }) {
                     {`${
                         isSuccess
                             ? 'Login Success!'
-                            : 'Email/password is incorrect. Please try again.'
+                            : `Email doesn't exist. Please try again.`
                     }`}
                 </Alert>
             </Snackbar>
-        </div>
+        </Box>
     )
 }
