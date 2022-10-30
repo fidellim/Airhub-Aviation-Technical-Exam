@@ -28,6 +28,7 @@ a {
     color: #1672fc;
     text-decoration: inherit;
 }
+
 a:hover {
     text-decoration: underline;
 }
