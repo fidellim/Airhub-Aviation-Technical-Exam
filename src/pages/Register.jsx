@@ -4,21 +4,9 @@ import { auth } from '../library/firebaseConfig'
 import { registerValidationSchema } from '../library/form'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
-import {
-    Typography,
-    Box,
-    FormHelperText,
-    Select,
-    FormControl,
-    MenuItem,
-    InputLabel,
-    TextField,
-    Button,
-    IconButton,
-} from '@mui/material'
-import { useState, forwardRef, useEffect } from 'react'
+import { Typography, Box, TextField, Button } from '@mui/material'
+import { useState, forwardRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { ResetPasswordModal } from '../components/Modal'
 import { signOut } from 'firebase/auth'
 
 const Alert = forwardRef(function Alert(props, ref) {
@@ -28,9 +16,6 @@ const Alert = forwardRef(function Alert(props, ref) {
 const Register = () => {
     let navigate = useNavigate()
     const [open, setOpen] = useState(false)
-    const [openModal, setOpenModal] = useState(false)
-    const handleOpenModal = () => setOpenModal(true)
-    const handleCloseModal = () => setOpenModal(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [errorMessage, setErrorMessage] = useState()
 
