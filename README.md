@@ -34,8 +34,8 @@ Timeline for the above task: 2 days
 
 ### Links
 
--   Solution URL: [Solution]()
--   Live Site URL: [Live Site]()
+-   Solution URL: [Solution](https://github.com/fidellim/Airhub-Aviation-Technical-Exam)
+-   Live Site URL: [Live Site](https://airhub-aviation-task-fidellim.netlify.app/)
 
 ## My process
 
