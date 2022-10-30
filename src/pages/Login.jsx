@@ -160,6 +160,24 @@ const Login = () => {
                     Register
                 </Typography>
             </Link>
+            <Typography
+                variant="h2"
+                sx={{
+                    fontSize: {
+                        xs: '1.5rem',
+                        sm: '2.5rem',
+                    },
+                    textAlign: 'center',
+                    marginBottom: '5px',
+                }}
+                onClick={handleOpenModal}
+            >
+                Forgot password?
+            </Typography>
+            <ResetPasswordModal
+                open={openModal}
+                handleClose={handleCloseModal}
+            />
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
