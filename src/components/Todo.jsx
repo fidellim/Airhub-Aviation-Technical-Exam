@@ -41,9 +41,10 @@ const Todo = ({ id, task, dueDate, isCompleted, FIREBASE_PATH }) => {
                     alignItems: 'center',
                     gap: '.75rem',
                     border: '1px solid blue',
+                    backgroundColor: 'white',
                     padding: '.5rem .5rem',
                     borderRadius: '7px',
-                    minWidth: '500px',
+                    maxWidth: '600px',
                     width: '100%',
                 }}
             >
@@ -59,7 +60,6 @@ const Todo = ({ id, task, dueDate, isCompleted, FIREBASE_PATH }) => {
                         flex: '1',
                         display: 'flex',
                         flexDirection: 'column',
-                        // minWidth: '500px',
                         width: '100%',
                     }}
                 >
@@ -96,7 +96,6 @@ const Todo = ({ id, task, dueDate, isCompleted, FIREBASE_PATH }) => {
                                 }}
                             >
                                 {formatDueDate}
-                                {/* {dueDate.toDate().toString()} */}
                             </Typography>
                         </Box>
                     )}
