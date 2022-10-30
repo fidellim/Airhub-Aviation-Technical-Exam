@@ -29,8 +29,8 @@ Timeline for the above task: 2 days
 ### Screenshot
 
 ![Solution Desktop](/images/solution_desktop.png)
-
-![Solution Mobile](/images/solution_mobile.png)
+![Solution Desktop](/images/solution_desktop2.png)
+![Solution Desktop](/images/solution_desktop3.png)
 
 ### Links
 
