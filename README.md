@@ -52,6 +52,7 @@ Timeline for the above task: 2 days
 -   [Override formik onchange](https://stackoverflow.com/questions/66744999/override-formik-onchange-with-custom-onchange-method-in-reactjs)
 -   [Update doc in Firestore](https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
 -   [Delete doc in Firestore](https://firebase.google.com/docs/firestore/manage-data/delete-data)
+-   [Password reset email in Firebase](https://firebase.google.com/docs/auth/web/manage-users#send_a_password_reset_email)
 
 ## Author
 
