@@ -111,52 +111,92 @@ const Home = () => {
     }
 
     return (
-        <div className="App">
+        <Box>
             <Box
                 sx={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
                     display: 'flex',
                     justifyContent: 'flex-end',
-                    padding: '1.5rem 1rem 1rem 1rem',
+                    padding: '1rem 1rem 1rem 1rem',
                 }}
             >
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        gap: '1rem',
+                    }}
+                >
                     <Button variant="outlined" onClick={handleSignOut}>
                         Logout
                     </Button>
-                    <Typography variant="h6" component="h6">
+                    <Typography
+                        variant="h6"
+                        component="h6"
+                        sx={{ fontSize: '1rem' }}
+                    >
                         {user && user.email}
                     </Typography>
                 </Box>
             </Box>
 
-            <Typography variant="h1" component="h1">
+            <Typography
+                variant="h1"
+                component="h1"
+                sx={{
+                    fontSize: { xs: '2rem', sm: '3rem', md: '96px' },
+                    padding: '0 1.5rem',
+                    textAlign: 'center',
+                    margin: {
+                        xs: '4.5rem 0 0 0',
+                        sm: '3rem 0 0 0',
+                    },
+                }}
+            >
                 TODO
             </Typography>
-            <form onSubmit={formik.handleSubmit}>
-                <TextField
-                    id="task"
-                    name="task"
-                    label="Task"
-                    variant="outlined"
-                    style={{ margin: '0px 5px' }}
-                    size="small"
-                    value={formik.values.task}
-                    onChange={formik.handleChange}
-                    error={formik.touched.task && Boolean(formik.errors.task)}
-                    helperText={formik.touched.task && formik.errors.task}
-                />
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Checkbox
-                        checked={isChecked}
-                        onChange={handleCheck}
-                        inputProps={{ 'aria-label': 'controlled' }}
+            <form
+                onSubmit={formik.handleSubmit}
+                style={{ padding: '0 1.5rem' }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '.5rem',
+                        backgroundColor: 'white',
+                        padding: '1rem',
+                        borderRadius: '7px',
+                        marginBottom: '.5rem',
+                    }}
+                >
+                    <TextField
+                        id="task"
+                        name="task"
+                        label="Task"
+                        variant="outlined"
+                        fullWidth
+                        value={formik.values.task}
+                        onChange={formik.handleChange}
+                        error={
+                            formik.touched.task && Boolean(formik.errors.task)
+                        }
+                        helperText={formik.touched.task && formik.errors.task}
                     />
-                    <Typography variant="p" component="p">
-                        {`${isChecked ? 'Remove' : 'Add'} reminder`}
-                    </Typography>
-                </Box>
-                {isChecked && (
-                    <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Checkbox
+                            checked={isChecked}
+                            onChange={handleCheck}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                        <Typography variant="p" component="p">
+                            {`${isChecked ? 'Remove' : 'Add'} reminder`}
+                        </Typography>
+                    </Box>
+                    {isChecked && (
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <MobileDateTimePicker
                                 id="reminder"
@@ -172,8 +212,8 @@ const Home = () => {
                                 minDate={dayjs(new Date().toString())}
                             />
                         </LocalizationProvider>
-                    </Box>
-                )}
+                    )}
+                </Box>
                 <Button variant="contained" color="primary" type="submit">
                     Add Todo
                 </Button>
@@ -184,6 +224,7 @@ const Home = () => {
                     flexDirection: 'column',
                     gap: '.5rem',
                     marginTop: '2rem',
+                    padding: '0 1.5rem',
                 }}
             >
                 {todos
@@ -209,7 +250,7 @@ const Home = () => {
                     }`}
                 </Alert>
             </Snackbar>
-        </div>
+        </Box>
     )
 }
 
