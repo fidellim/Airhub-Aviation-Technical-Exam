@@ -4,10 +4,21 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker'
 import dayjs from 'dayjs'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import { useFormik } from 'formik'
-import { todoValidationSchema } from '../library/form'
+import {
+    resetPasswordValidationSchema,
+    todoValidationSchema,
+} from '../library/form'
 import { updateTodo } from '../database'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '../library/firebaseConfig'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
+
+const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 const style = {
     position: 'absolute',
@@ -130,6 +141,109 @@ export default function EditModal({
                     </form>
                 </Box>
             </Modal>
+        </div>
+    )
+}
+
+export function ResetPasswordModal({ open, handleClose }) {
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [openSnackbar, setOpenSnackbar] = useState(false)
+    const handleOpenSnackbar = () => setOpenSnackbar(true)
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+
+        setOpenSnackbar(false)
+    }
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+        },
+        validationSchema: resetPasswordValidationSchema,
+        onSubmit: async (values, { resetForm }) => {
+            const { email } = values
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    // Password reset email sent!
+                    // ..
+                    setIsSuccess(true)
+                    handleOpenSnackbar()
+                    resetForm({ values: '' })
+                })
+                .catch((error) => {
+                    const errorCode = error.code
+                    const errorMessage = error.message
+                    // ..
+                    setIsSuccess(false)
+                    handleOpenSnackbar()
+                })
+        },
+    })
+
+    return (
+        <div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <form
+                        onSubmit={formik.handleSubmit}
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem',
+                        }}
+                    >
+                        <TextField
+                            id="email"
+                            name="email"
+                            label="Email"
+                            variant="outlined"
+                            style={{ margin: '0px 5px' }}
+                            size="small"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            error={
+                                formik.touched.email &&
+                                Boolean(formik.errors.email)
+                            }
+                            helperText={
+                                formik.touched.email && formik.errors.email
+                            }
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            Request Reset Password
+                        </Button>
+                    </form>
+                </Box>
+            </Modal>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert
+                    onClose={handleCloseSnackbar}
+                    severity={`${isSuccess ? 'success' : 'error'}`}
+                    sx={{ width: '100%' }}
+                >
+                    {`${
+                        isSuccess
+                            ? 'Login Success!'
+                            : 'Email/password is incorrect. Please try again.'
+                    }`}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }
